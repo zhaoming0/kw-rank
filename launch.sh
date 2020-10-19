@@ -8,5 +8,5 @@ do
 	cp $n test.xlsx
 	git add .
 	git commit -am "KW-RANK ${n#*/} $now_time"
-	git push origin master
+	git push origin main
 done
