@@ -29,6 +29,7 @@ chrome_options.add_argument('--start-maximized')
 
 driver = webdriver.Chrome(chrome_options=chrome_options)
 driver.get('https://tools.keycdn.com/geo')
+time.sleep(5)
 cityName = (driver.find_element_by_xpath('//*[@id="geoResult"]/div[1]/dl[1]/dd[1]').text)
 zipcode = (driver.find_element_by_xpath('//*[@id="geoResult"]/div[1]/dl[1]/dd[3]').text)
 country = (driver.find_element_by_xpath('//*[@id="geoResult"]/div[1]/dl[1]/dd[4]').text)
@@ -80,6 +81,7 @@ for i in col1:
             if (final_result[keyword][1] != 0 and final_result[keyword][2] != 0):
                 break
             driver.get('https://www.amazon.com/' + linkStr + '&page=' + str(i)+ '&language=en_US')            
+            time.sleep(5)
             if flags == False:
                 count = driver.find_element_by_xpath('//*[@id="search"]/span/div/span/h1/div/div[1]/div/div/span[1]').text
                 count = count.split(' ')[-3].replace(',','')
