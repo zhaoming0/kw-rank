@@ -18,7 +18,7 @@ from bs4 import BeautifulSoup
 import urllib.request
 import pandas as pd
 
-nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M')
+nowTime = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-')
 chrome_options = webdriver.ChromeOptions()
 # chrome_options.add_argument('--headless')
 chrome_options.add_argument('log-level=3')
@@ -36,15 +36,18 @@ country = (driver.find_element_by_xpath('//*[@id="geoResult"]/div[1]/dl[1]/dd[4]
 print('\n\nNow test begining country: ' + country + ' city: ' + cityName + ' Zipcode: '+ zipcode + '\n\n')
 
 driver.get('https://www.amazon.com/?currency=USD&language=en_US')
-time.sleep(10)
-# driver.find_element_by_xpath('//*[@id="nav-packard-glow-loc-icon"]').click()
-# time.sleep(10)
-# driver.find_element_by_xpath('//*[@id="GLUXZipUpdateInput"]').send_keys('10001')
-# time.sleep(10)
-# driver.find_element_by_xpath('//*[@id="GLUXZipUpdate"]/span/input').click()
-# time.sleep(10)
-# driver.get('https://www.amazon.com/')
-# print('\n Amazon ZIPCode:'+ driver.find_element_by_xpath('//*[@id="glow-ingress-line2"]').text)
+time.sleep(5)
+driver.find_element_by_xpath('//*[@id="nav-packard-glow-loc-icon"]').click()
+time.sleep(5)
+if (country == 'United States (US)'):
+    driver.find_element_by_xpath('//*[@id="GLUXZipUpdateInput"]').send_keys(zipcode)
+else:
+    driver.find_element_by_xpath('//*[@id="GLUXZipUpdateInput"]').send_keys('10001')
+time.sleep(5)
+driver.find_element_by_xpath('//*[@id="GLUXZipUpdate"]/span/input').click()
+time.sleep(5)
+driver.get('https://www.amazon.com/')
+print('\n Amazon ZIPCode:'+ driver.find_element_by_xpath('//*[@id="glow-ingress-line2"]').text)
 
 counts = 0
 final_result = {}
@@ -116,6 +119,6 @@ for k,v in final_result.items():
 
 pf = pd.DataFrame(final_result)
 pf = pd.DataFrame(pf.values.T, index= pf.columns, columns=pf.index)
-file_path = pd.ExcelWriter('asin-top.xlsx')
+file_path = pd.ExcelWriter(nowTime+'asin-top.xlsx')
 pf.to_excel(file_path,encoding='utf-8',index=True)
 file_path.save()
