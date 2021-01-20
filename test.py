@@ -25,7 +25,7 @@ chrome_options.add_argument('log-level=3')
 # chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument('--ignore-certificate-errors')
 # chrome_options.add_argument('--disable-images')
-chrome_options.add_argument('--start-maximized')
+# chrome_options.add_argument('--start-maximized')
 
 driver = webdriver.Chrome(chrome_options=chrome_options)
 driver.get('https://tools.keycdn.com/geo')
@@ -74,7 +74,7 @@ for i in col1:
             linkStr = linkStr +lineToList[a] + '+'
         linkStr[:-1]
         counts = 1 + counts
-        driver.maximize_window()
+        # driver.maximize_window()
         flags = False
         keyword = linkStr.replace('+', ' ')[4:]
         print(str(counts) + ' for  keyword: ' + keyword)
@@ -119,6 +119,6 @@ for k,v in final_result.items():
 
 pf = pd.DataFrame(final_result)
 pf = pd.DataFrame(pf.values.T, index= pf.columns, columns=pf.index)
-file_path = pd.ExcelWriter(nowTime+'asin-top.xlsx')
+file_path = pd.ExcelWriter(nowTime+ASIN+'asin-top.xlsx')
 pf.to_excel(file_path,encoding='utf-8',index=True)
 file_path.save()
